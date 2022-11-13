@@ -2,6 +2,15 @@
 This file contains main message for program
 """
 
+COLUMNS = [
+    'None', 'None', 'None', 'None', 'None',
+    'None', 'Time', 'None', 'None', 'None',
+    'None', 'head(t)', 'pitch(t)', 'None',
+    'None', 'None', 'None', 'None','None',
+    'None', 'None', 'None', 'None','None',
+    'None', 'None',
+    ]
+
 MESSAGE = (
 '#HEADINGA,COM1_1,0,49.5,FINESTEERING,2123,294139.000,02000000,22a9,15823;SOL_COMPUTED,NARROW_INT,1.999566555,3.270111084,-3.575500488,0.0,0.108300976,0.175876006,"T28M",32,25,25,23,04,01,30,33*594125aa',
 '#HEADINGA,COM1_1,0,49.5,FINESTEERING,2123,294140.000,02000000,22a9,15823;SOL_COMPUTED,NARROW_INT,1.999330401,3.290492058,-3.543518066,0.0,0.108795263,0.176262915,"T28M",32,25,25,23,04,01,30,33*3f2bf742',
