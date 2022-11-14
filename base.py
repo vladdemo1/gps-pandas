@@ -41,7 +41,24 @@ class Pandas:
             self.y_head = np.array([float(element) for element in pandas_head['head(t)']])
             self.y_pitch = np.array([float(element) for element in pandas_pitch['pitch(t)']])
 
-            self.middle_time = np.array([self.x_time[i] for i in range(len(self.x_time)) if i % 10 == 0])
+            self.middle_time_10 = np.array([self.x_time[i] for i in range(len(self.x_time)) if i % 10 == 0])
+            self.middle_head_10 = self.get_middle(self.y_head, number=10, minus=5, len_time=len(self.middle_time_10))
+            self.middle_pitch_10 = self.get_middle(self.y_pitch, number=10, minus=5, len_time=len(self.middle_time_10))
+
+            self.middle_time_20 = np.array([self.x_time[i] for i in range(len(self.x_time)) if i % 20 == 0])
+            self.middle_head_20 = self.get_middle(self.y_head, number=20, minus=15, len_time=len(self.middle_time_20))
+            self.middle_pitch_20 = self.get_middle(self.y_pitch, number=20, minus=15, len_time=len(self.middle_time_20))
+
+        
+        def get_middle(self, array, number: int, minus: int, len_time: int):
+            middle_list = []
+            temp_list = []
+            for i in range(len_time*number - minus):
+                temp_list.append(array[i])
+                if (i+1) % number == 0:
+                    middle_list.append(sum(temp_list) / number)
+                    temp_list.clear()
+            return middle_list
 
         
         def show_head_to_time(self) -> None:
@@ -64,29 +81,63 @@ class Pandas:
             figure.savefig('pitch_by_time.jpg')
             return None
 
-    
+        def show_middle_head_to_time_10(self) -> None:
+            figure = plt.figure()
+            plt.plot(self.middle_time_10[:-1], self.middle_head_10, marker='*', markerfacecolor='w')
+            plt.xlabel('Час')
+            plt.ylabel('Кут курсу')
+            plt.suptitle('Head by time sets 10 middle')
+            plt.show()
+            figure.savefig('head_by_time_middle_10.jpg')
+            return None
 
+        def show_middle_pitch_to_time_10(self) -> None:
+            figure = plt.figure()
+            plt.plot(self.middle_time_10[:-1], self.middle_pitch_10, marker='*', markerfacecolor='w')
+            plt.xlabel('Час')
+            plt.ylabel('Кут крену')
+            plt.suptitle('Pitch by time sets 10 middle')
+            plt.show()
+            figure.savefig('pitch_by_time_middle_10.jpg')
+            return None
+
+        def show_middle_head_to_time_20(self) -> None:
+            figure = plt.figure()
+            plt.plot(self.middle_time_20[:-1], self.middle_head_20, marker='*', markerfacecolor='w')
+            plt.xlabel('Час')
+            plt.ylabel('Кут курсу')
+            plt.suptitle('Head by time sets 20 middle')
+            plt.show()
+            figure.savefig('head_by_time_middle_20.jpg')
+            return None
+
+        def show_middle_pitch_to_time_20(self) -> None:
+            figure = plt.figure()
+            plt.plot(self.middle_time_20[:-1], self.middle_pitch_20, marker='*', markerfacecolor='w')
+            plt.xlabel('Час')
+            plt.ylabel('Кут крену')
+            plt.suptitle('Pitch by time sets 20 middle')
+            plt.show()
+            figure.savefig('pitch_by_time_middle_20.jpg')
+            return None
 
 
 pan = Pandas()
 
-# print(pan.df_time)
-# print(pan.df_head_t)
-# print(pan.df_pitch_t)
+# pan.show.show_head_to_time()
+# pan.show.show_pitch_to_time()
 
-# print(df['Time'][0])
+# pan.show.show_middle_head_to_time_10()
+# pan.show.show_middle_pitch_to_time_10()
 
-# pan.df.plot(kind='scatter', x='Time', y='head(t)', color='red', marker='*')
-# plt.show()
+# pan.show.show_middle_head_to_time_20()
+# pan.show.show_middle_pitch_to_time_20()
 
-# pan.df.plot(kind='scatter', x='Time', y='pitch(t)', color='red', marker='*')
-# plt.show()
+print(f'Середнє значення head(t): {sum(pan.show.y_head)/len(pan.show.y_head)}')
+print(f'Середнє значення pitch(t): {sum(pan.show.y_pitch)/len(pan.show.y_pitch)}')
 
+print(f'Середнє квадратичне відхилення head(t): {pan.show.y_head.std()}')
+print(f'Середнє квадратичне відхилення pitch(t): {pan.show.y_pitch.std()}')
 
-# print(pan.df_time)
-
-pan.show.show_head_to_time()
-pan.show.show_pitch_to_time()
-
-
-# print(pan.show.middle_pitch)
+print(f'Максимальне відхилення head(t) від середнього значення: {max(pan.show.y_head) - (sum(pan.show.y_head)/len(pan.show.y_head))}')
+print(f'Максимальне відхилення pitch(t) від середнього значення: {max(pan.show.y_pitch) - (sum(pan.show.y_pitch)/len(pan.show.y_pitch))}')
